@@ -17,6 +17,10 @@ DerivedData
 *.ipa
 *.xcuserstate
 
+model/
+opencv2.framework
+*.caffemodel
+
 # CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However
