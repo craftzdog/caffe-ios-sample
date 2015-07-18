@@ -25,7 +25,7 @@ You need your `caffemodel`, `deploy.prototxt`, `mean.binaryproto` and `labels.tx
 
 ## How to classify
 
-```
+```objective-c
 NSString* model_file = [NSBundle.mainBundle pathForResource:@"deploy" ofType:@"prototxt" inDirectory:@"model"];
 NSString* label_file = [NSBundle.mainBundle pathForResource:@"labels" ofType:@"txt" inDirectory:@"model"];
 NSString* mean_file = [NSBundle.mainBundle pathForResource:@"mean" ofType:@"binaryproto" inDirectory:@"model"];
@@ -46,7 +46,7 @@ std::vector<Prediction> result = classifier.Classify(src_img);
 
 Output into console:
 
-```
+```objective-c
 for (std::vector<Prediction>::iterator it = result.begin(); it != result.end(); ++it) {
   NSString* label = [NSString stringWithUTF8String:it->first.c_str()];
   NSNumber* probability = [NSNumber numberWithFloat:it->second];
