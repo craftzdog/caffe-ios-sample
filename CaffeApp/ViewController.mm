@@ -39,11 +39,13 @@
   
   UIImage* example = [UIImage imageNamed:@"image_0002.jpg"];
   
-  cv::Mat src_img;
+  cv::Mat src_img, bgra_img;
   UIImageToMat(example, src_img);
-  
+  // needs to convert to BGRA because the image loaded from UIImage is in RGBA
+  cv::cvtColor(src_img, bgra_img, CV_RGBA2BGRA);
+
   Classifier classifier = Classifier(model_file_str, trained_file_str, mean_file_str, label_file_str);
-  std::vector<Prediction> result = classifier.Classify(src_img);
+  std::vector<Prediction> result = classifier.Classify(bgra_img);
 
   for (std::vector<Prediction>::iterator it = result.begin(); it != result.end(); ++it) {
     NSString* label = [NSString stringWithUTF8String:it->first.c_str()];
