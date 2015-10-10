@@ -4,7 +4,9 @@ Caffe iOS sample
 This is an example XCode project using iOS version of Caffe built by [aleph7](https://github.com/aleph7/caffe).
 
 It also includes a class `Classifier` which is the `cpp_classification` imported from Caffe C++ example.
-It can classify images and outputs result with labels in the XCode console.
+It classifies example image as following screenshot:
+
+![sc](https://cloud.githubusercontent.com/assets/1332805/10410561/75af32ae-6f80-11e5-9db5-2ca70a8718e3.png =250x)
 
 ## Dependencies
 
@@ -21,7 +23,11 @@ $ git clone --recursive git@github.com:noradaiko/caffe-ios-sample.git
 ### Prepare model files
 
 You need your `caffemodel`, `deploy.prototxt`, `mean.binaryproto` and `labels.txt` into `model/` directory.
+This sample already includes files for testing except for `caffemodel`.
 
+You can download BVLC CaffeNet Model from: [http://dl.caffe.berkeleyvision.org/bvlc_reference_caffenet.caffemodel](http://dl.caffe.berkeleyvision.org/bvlc_reference_caffenet.caffemodel).
+
+Of course, you can use your own network model if you have.
 
 ## How to classify
 
