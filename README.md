@@ -6,7 +6,7 @@ This is an example XCode project using iOS version of Caffe built by [aleph7](ht
 It also includes a class `Classifier` which is the `cpp_classification` imported from Caffe C++ example.
 It classifies example image as following screenshot:
 
-![sc](https://cloud.githubusercontent.com/assets/1332805/10410561/75af32ae-6f80-11e5-9db5-2ca70a8718e3.png =250x)
+![sc](https://cloud.githubusercontent.com/assets/1332805/10410612/d0450f08-6f81-11e5-8dc5-2dd870639b4b.png)
 
 ## Dependencies
 
