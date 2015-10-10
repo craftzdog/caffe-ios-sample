@@ -17,7 +17,6 @@ DerivedData
 *.ipa
 *.xcuserstate
 
-model/
 opencv2.framework
 *.caffemodel
 

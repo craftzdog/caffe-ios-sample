@@ -18,7 +18,26 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Do any additional setup after loading the view, typically from a nib.
-  [self predict];
+  
+  UIImage* image = [UIImage imageNamed:@"image_0002.jpg"];
+  CGSize imageSize = image.size;
+  CGSize viewSize = self.view.bounds.size;
+  
+  UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
+  imageView.frame = CGRectMake((viewSize.width-imageSize.width)/2, (viewSize.height-imageSize.height)/2, imageSize.width, imageSize.height);
+  [self.view addSubview:imageView];
+
+  UILabel* label = [[UILabel alloc] init];
+  label.frame = CGRectMake(10, CGRectGetMaxY(imageView.frame)+10, viewSize.width-20, 50);
+  label.numberOfLines = 2;
+  label.textAlignment = NSTextAlignmentCenter;
+  label.text = @"Classifying..";
+  [self.view addSubview:label];
+  
+  dispatch_async(dispatch_get_main_queue(), ^{
+    NSString* result = [self predictWithImage:image];
+    label.text = result;
+  });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,7 +45,7 @@
   // Dispose of any resources that can be recreated.
 }
 
-- (void)predict;
+- (NSString*)predictWithImage: (UIImage*)image;
 {
   NSString* model_file = [NSBundle.mainBundle pathForResource:@"deploy" ofType:@"prototxt" inDirectory:@"model"];
   NSString* label_file = [NSBundle.mainBundle pathForResource:@"labels" ofType:@"txt" inDirectory:@"model"];
@@ -37,21 +56,26 @@
   string trained_file_str = std::string([trained_file UTF8String]);
   string mean_file_str = std::string([mean_file UTF8String]);
   
-  UIImage* example = [UIImage imageNamed:@"image_0002.jpg"];
-  
   cv::Mat src_img, bgra_img;
-  UIImageToMat(example, src_img);
+  UIImageToMat(image, src_img);
   // needs to convert to BGRA because the image loaded from UIImage is in RGBA
   cv::cvtColor(src_img, bgra_img, CV_RGBA2BGRA);
 
   Classifier classifier = Classifier(model_file_str, trained_file_str, mean_file_str, label_file_str);
   std::vector<Prediction> result = classifier.Classify(bgra_img);
 
+  NSString* ret = nil;
+  
   for (std::vector<Prediction>::iterator it = result.begin(); it != result.end(); ++it) {
     NSString* label = [NSString stringWithUTF8String:it->first.c_str()];
     NSNumber* probability = [NSNumber numberWithFloat:it->second];
     NSLog(@"label: %@, prob: %@", label, probability);
+    if (it == result.begin()) {
+      ret = label;
+    }
   }
+  
+  return ret;
 }
 
 @end
