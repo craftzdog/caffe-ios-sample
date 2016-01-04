@@ -11,6 +11,7 @@ It classifies example image as following screenshot:
 ## Dependencies
 
 * opencv2.framework
+* Xcode 6 (can't build with Xcode 7)
 
 ## Get started
 
